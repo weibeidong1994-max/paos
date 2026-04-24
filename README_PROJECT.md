@@ -1,5 +1,7 @@
 # PAOS — Personal AI OS
 
+**GitHub**: https://github.com/weibeidong1994-max/paos
+
 ## 解决了什么问题
 
 **问题**：个人信息和知识碎片化——从社交媒体、RSS、文章等渠道获取的内容散落各处，难以系统性沉淀和复用。
