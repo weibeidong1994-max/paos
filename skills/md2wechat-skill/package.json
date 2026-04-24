@@ -1,0 +1,34 @@
+{
+  "name": "@geekjourneyx/md2wechat",
+  "version": "2.0.7",
+  "description": "Install the md2wechat CLI from the matching GitHub Release bundle.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geekjourneyx/md2wechat-skill.git"
+  },
+  "homepage": "https://github.com/geekjourneyx/md2wechat-skill#readme",
+  "bugs": {
+    "url": "https://github.com/geekjourneyx/md2wechat-skill/issues"
+  },
+  "bin": {
+    "md2wechat": "scripts/run.js"
+  },
+  "scripts": {
+    "pack:check": "npm pack --json --dry-run",
+    "postinstall": "node scripts/install.js"
+  },
+  "files": [
+    "scripts/install.js",
+    "scripts/run.js",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

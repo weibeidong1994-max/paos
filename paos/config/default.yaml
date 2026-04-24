@@ -1,0 +1,73 @@
+# PAOS 默认配置
+# 所有配置项均在此统一管理，代码中不再硬编码
+# 可通过环境变量覆盖，规则：PAOS_ 前缀 + 双下划线表示嵌套，例如 PAOS_LLM__MODEL=gpt-4o
+
+app:
+  name: "PAOS"
+  version: "0.2.0"
+
+server:
+  host: "127.0.0.1"
+  port: 8000
+
+data_dir: "./data"
+
+database:
+  filename: "paos.db"
+
+llm:
+  # 公开的默认配置（可进 Git）
+  provider: openai
+  model: step-3.5-flash-2603
+  base_url: https://api.stepfun.com/step_plan/v1
+  temperature: 0.7
+  max_tokens: 4000
+  # 注意：api_key 不在此处配置，通过环境变量 PAOS__LLM__api_key 注入
+
+pipeline:
+  default_tags: ["未分类"]
+  # 每次输入后自动生成文章（完整三阶段流水线的默认行为）
+  auto_generate_article: true
+  distillation_prompt: |
+    你是一位信息提纯助手。请对以下用户输入进行去噪和提炼：
+    1. 保留核心事实和观点
+    2. 去除口语化、重复和无关内容
+    3. 输出一段简洁的摘要（不超过200字）
+    4. 给出3-5个标签，用逗号分隔
+
+    请按以下格式返回（严格遵循）：
+    摘要：{{摘要内容}}
+    标签：{{标签1, 标签2, 标签3}}
+
+output:
+  article:
+    prompt_template: |
+      你是一位自媒体写手。请根据以下提炼后的素材，撰写一篇结构化的 Markdown 文章。
+      要求：
+      - 有一个吸引人的标题
+      - 分点阐述，逻辑清晰
+      - 语言流畅，适合公众号或知乎发布
+
+      素材如下：
+      {content}
+    format: "markdown"
+    # 文章生成后的保存目录，修改此处即可改变输出位置
+    save_dir: "./data/output"
+
+search:
+  default_engine: "duckduckgo"
+  auto_search: false
+  auto_search_engine: "duckduckgo"
+  max_results: 10
+  timeout: 15.0
+  enrich_pipeline: false
+
+adapters:
+  input:
+    enabled:
+      - natural_language
+      - openclaw
+      - web_search
+  output:
+    enabled:
+      - article
